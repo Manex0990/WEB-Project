@@ -24,5 +24,10 @@ def open_task(title):
     return render_template('solution.html', title=title_html, task=task)
 
 
+@app.route('/task/<title>/solution')
+def open_solution(title):
+    pass
+
+
 if __name__ == '__main__':
     app.run(port=5000, host='127.0.0.1')
