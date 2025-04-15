@@ -73,13 +73,7 @@ class MyMath:
                 elif c_sq > 0 and a_sq == 1:
                     return f'x\u00B2 - {-b_sq}x + {c_sq} = 0'
 
-    def answer_square_x(self, square_x):
-        """
-        Вернет 1) если дискриминант положительный - список из 2 целых или дробных чисел
-                  2) если дискриминант 0 - одно целое или дробное число
-                  3) если дискриминант отрицательный - строку "Корней нет"
-           корни последнего сгенерированного кв уравнения
-           """
+    def find_coofs_square_x(self, square_x):
         coofs = []
         if square_x.startswith('-'):
             a_sq = -1
@@ -106,7 +100,17 @@ class MyMath:
             c_sq = -int(square_x[4])
         elif square_x[3] == '+':
             c_sq = int(square_x[4])
+        return [a_sq, b_sq, c_sq]
 
+    def answer_square_x(self, square_x):
+        """
+        Вернет 1) если дискриминант положительный - список из 2 целых или дробных чисел
+                  2) если дискриминант 0 - одно целое или дробное число
+                  3) если дискриминант отрицательный - строку "Корней нет"
+           корни последнего сгенерированного кв уравнения
+           """
+        coofs = self.find_coofs_square_x(square_x)
+        a_sq, b_sq, c_sq = coofs[0], coofs[1], coofs[2]
         d = (abs(b_sq) ** 2) - (4 * a_sq * c_sq)
         if d == 0:
             answer = (-b_sq) / (2 * a_sq)
@@ -134,6 +138,12 @@ class MyMath:
         else:
             answer = 'Корней нет'
             return answer
+
+    def find_discriminant(self, square_x):
+        coofs = self.find_coofs_square_x(square_x)
+        a_sq, b_sq, c_sq = coofs[0], coofs[1], coofs[2]
+        d = (abs(b_sq) ** 2) - (4 * a_sq * c_sq)
+        return d
 
     def check_answer_square_x(self, task, user_answer):
         """

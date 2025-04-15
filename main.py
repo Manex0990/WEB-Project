@@ -28,7 +28,18 @@ def open_task(title):
 def open_solution(title):
     task = funcs[names[title]]()
     title_html = names[title]
-    return render_template('solution.html', title=title_html, task=task)
+    solution_generation = {'Квадратное уравнение': ['Сначала найдем дискриминант квадратного уравнения:',
+                                                    'Если дискриманант больше нуля, то будет 2 корня',
+                                                    'Если равен нулю, то будет 1 корень',
+                                                    'Если меньше нуля, то Корней нет.',
+                                                    f'D = b\u00B2 - 4ac; D = {ex.find_discriminant(task)}',
+                                                    'Теперь можно найти корни(корень) уравнения',
+                                                    'x1 = (-b - \u221AD) / 2a',
+                                                    'x2 = (-b + \u221AD) / 2a',
+                                                    f'Ответ: {ex.answer_square_x(task)}'
+                                                    ]}
+    return render_template('solution.html', title=title_html, task=task,
+                           solution_log=solution_generation[title_html])
 
 
 if __name__ == '__main__':

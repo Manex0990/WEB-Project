@@ -1,28 +1,39 @@
-{% extends "task_opened.html"%}
-{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+        <title>{{ title }}</title>
+</head>
+<body>
 {% if title == 'Квадратное уравнение' %}
-        <form>
-            <div>Решение квадратного уравнения</div>
-        </form>
- {% elif title == 'Линейное уравнение' %}
-        <form>
-            <div>Решение линейного уравнения</div>
-        </form>
- {% elif title == 'Пример на сложение' %}
-        <form>
-            <div>Решение примера на сложение</div>
-        </form>
- {% elif title == 'Пример на вычитание' %}
-        <form>
-            <div>Решение примера на вычитание</div>
-        </form>
- {% elif title == 'Пример на умножение' %}
-        <form>
-            <div>Решение примера на умножение</div>
-        </form>
- {% elif title == 'Пример на деление' %}
-        <form>
-            <div>Решение примера на деление</div>
-        </form>
- {% endif %}
-{% endblock %}
+<form>
+    <h1>Решение квадратного уравнения</h1>
+    <h1>Наше уравнение: {{ task }}</h1>
+    <body>
+    {% for item in solution_log %}
+    <h2>{{ item }}</h2>
+    {% endfor %}
+    </body>
+</form>
+{% elif title == 'Линейное уравнение' %}
+<form>
+    <div>Решение линейного уравнения</div>
+</form>
+{% elif title == 'Пример на сложение' %}
+<form>
+    <div>Решение примера на сложение</div>
+</form>
+{% elif title == 'Пример на вычитание' %}
+<form>
+    <div>Решение примера на вычитание</div>
+</form>
+{% elif title == 'Пример на умножение' %}
+<form>
+    <div>Решение примера на умножение</div>
+</form>
+{% elif title == 'Пример на деление' %}
+<form>
+    <div>Решение примера на деление</div>
+</form>
+</body>
+{% endif %}
