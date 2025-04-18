@@ -5,5 +5,5 @@ from wtforms.validators import DataRequired
 
 
 class TaskForm(FlaskForm):
-    answer = StringField('Ответ', validators=[DataRequired()])
+    answer = StringField('Ответ')
     submit = SubmitField('Ответить')

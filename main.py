@@ -26,11 +26,17 @@ def open_task(title):
     title_html = names[title]
     if form.validate_on_submit():
         user_answer = form.answer.data
-        return redirect(f'/task/{title}/solution')
+        if ex.check_answer_square_x(task, user_answer):
+            return render_template('task_opened.html', title=title_html,
+                                   form=form, message='Верно')
+        else:
+            return render_template('task_opened.html', title=title_html,
+                                   form=form, message='Неверно или неверный формат ответа')
     return render_template('task_opened.html', title=title_html, task=task, form=form)
 
 
 # нужно разделить обработчики для решения квадратного, линейного, примеров.
+# засунуть все в функцию open_task
 @app.route('/task/<title>/solution')
 def open_solution(title):
     task = funcs[names[title]][0]()
