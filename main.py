@@ -19,6 +19,7 @@ funcs = {'Квадратное уравнение': [ex.generate_square_x, ex.ch
          'Пример на деление': [ex.generate_crop_stage_1, ex.check_answer_for_all_stages]}
 
 
+# добавить наследование html
 @app.route('/task/<title>', methods=['GET', 'POST'])
 def open_task(title):
     form = TaskForm()
@@ -32,7 +33,7 @@ def open_task(title):
         else:
             return render_template('task_opened.html', title=title_html,
                                    form=form, message='Неверно или неверный формат ответа')
-    return render_template('task_opened.html', title=title_html, task=task, form=form)
+    return render_template('solution.html', title=title_html, task=task, form=form)
 
 
 # нужно разделить обработчики для решения квадратного, линейного, примеров.
