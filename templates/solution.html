@@ -1,9 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-        <title>{{ title }}</title>
-</head>
+{% extends "task_opened.html" %}
+
+{% block content %}
 <body>
 {% if title == 'Квадратное уравнение' %}
 <form>
@@ -57,3 +54,4 @@
     </body>
 </body>
 {% endif %}
+{% endblock %}
