@@ -210,14 +210,14 @@ class MyMath:
             x = int(temp_x / a_li)
         else:
             x = round(temp_x / a_li, 2)
-        return x
+        return str(x)
 
     def check_answer_line_x(self, task, user_answer):
         """
         В качестве ответа может быть принято
         целое число или дробное(округлите до сотых) число
         """
-        if float(user_answer) == float(self.answer_line_x(task)):
+        if str(user_answer) == str(self.answer_line_x(task)):
             return ['Верно. Продолжайте в том же духе.', True, 'line_x']
         else:
             return [f'Неверно. Проверьте расчеты и попробуйте позже.', False]
@@ -268,50 +268,50 @@ class MyMath:
         if type_task == 's':
             if stage == 1:
                 a, b = self.search_coofs_for_stage_1_2(task)
-                return a + b
+                return str(a + b)
             elif stage == 2:
                 a, b = self.search_coofs_for_stage_1_2(task)
-                return round(a + b, 2)
+                return str(round(a + b, 2))
             elif stage == 3:
                 a, b, c, d = self.search_coofs_for_stage_3(task)
-                return round(a + b + c + d, 2)
+                return str(round(a + b + c + d, 2))
         elif type_task == 'm':
             if stage == 1:
                 a, b = self.search_coofs_for_stage_1_2(task)
-                return a - b
+                return str(a - b)
             elif stage == 2:
                 a, b = self.search_coofs_for_stage_1_2(task)
-                return round(a - b, 2)
+                return str(round(a - b, 2))
             elif stage == 3:
                 a, b, c, d = self.search_coofs_for_stage_3(task)
-                return round(a - b - c - d, 2)
+                return str(round(a - b - c - d, 2))
         elif type_task == 'cr':
             if stage == 1:
                 a, b = self.search_coofs_for_stage_1_2(task)
-                return round(a / b, 2)
+                return str(round(a / b, 2))
             elif stage == 2:
                 a, b = self.search_coofs_for_stage_1_2(task)
-                return round(a / b, 2)
+                return str(round(a / b, 2))
             elif stage == 3:
                 a, b, c, d = self.search_coofs_for_stage_3(task)
-                return round(a / b / c / d, 2)
+                return str(round(a / b / c / d, 2))
         elif type_task == 'mul':
             if stage == 1:
                 a, b = self.search_coofs_for_stage_1_2(task)
-                return round(a * b, 2)
+                return str(round(a * b, 2))
             elif stage == 2:
                 a, b = self.search_coofs_for_stage_1_2(task)
-                return round(a * b, 2)
+                return str(round(a * b, 2))
             elif stage == 3:
                 a, b, c, d = self.search_coofs_for_stage_3(task)
-                return round(a * b * c * d, 2)
+                return str(round(a * b * c * d, 2))
 
     def check_answer_for_all_stages(self, task, user_answer):
         """
         Проверить ответ пользователя на любой пример.
         """
         type_task = '_'.join(self.iddentificate_task(task))
-        if user_answer == self.answer_for_all_stages(task):
+        if str(user_answer) == str(self.answer_for_all_stages(task)):
             return ['Верно. Продолжайте в том же духе.', True, type_task]
         else:
             return ['Неверно. Проверьте рассчеты и попробуйте позже.', False]
