@@ -17,42 +17,51 @@ funcs = {'Квадратное уравнение': [ex.generate_square_x, ex.ch
          'Пример на вычитание': [ex.generate_min_stage_1, ex.check_answer_for_all_stages],
          'Пример на умножение': [ex.generate_multiply_stage_1, ex.check_answer_for_all_stages],
          'Пример на деление': [ex.generate_crop_stage_1, ex.check_answer_for_all_stages]}
+c = 0
+temp = ''
 
 
 @app.route('/task/<title>', methods=['GET', 'POST'])
 def open_task(title):
+    global c
+    global temp
     form = TaskForm()
-    task = funcs[names[title]][0]()
+    if c == 0:
+        task = funcs[names[title]][0]()
+        temp = task
     title_html = names[title]
     solution_generation = {'Квадратное уравнение': ['Сначала найдем дискриминант квадратного уравнения:',
                                                     'Если дискриманант больше нуля, то будет 2 корня',
                                                     'Если равен нулю, то будет 1 корень',
                                                     'Если меньше нуля, то Корней нет.',
-                                                    f'D = b\u00B2 - 4ac; D = {ex.find_discriminant(task)}',
+                                                    f'D = b\u00B2 - 4ac; D = {ex.find_discriminant(temp)}',
                                                     'Теперь можно найти корни(корень) уравнения',
                                                     'x1 = (-b - \u221AD) / 2a',
                                                     'x2 = (-b + \u221AD) / 2a',
-                                                    f'Ответ: {ex.answer_square_x(task)}'],
+                                                    f'Ответ: {ex.answer_square_x(temp)}'],
                            'Линейное уравнение': ['Решим линейное уравнение'],
                            'Пример на сложение': ['Просто сложим все коэффициенты',
-                                                  f'Ответ: {ex.answer_for_all_stages(task)}'],
+                                                  f'Ответ: {ex.answer_for_all_stages(temp)}'],
                            'Пример на вычитание': ['Просто вычтем все коэффициенты',
-                                                   f'Ответ: {ex.answer_for_all_stages(task)}'],
+                                                   f'Ответ: {ex.answer_for_all_stages(temp)}'],
                            'Пример на умножение': ['Просто перемножим все коэффициенты',
-                                                   f'Ответ: {ex.answer_for_all_stages(task)}'],
+                                                   f'Ответ: {ex.answer_for_all_stages(temp)}'],
                            'Пример на деление': ['Просто разделим по порядку все коэффициенты',
-                                                 f'Ответ: {ex.answer_for_all_stages(task)}']}
+                                                 f'Ответ: {ex.answer_for_all_stages(temp)}']}
     if request.method == 'POST':
         user_answer = form.answer.data
-        verdict = ex.check_answer_square_x(task, user_answer)
+        verdict = funcs[names[title]][1](temp, user_answer)
         if verdict[1]:
-            return render_template('solution.html', title=title_html, task=task, form=form,
+            c += 1
+            return render_template('solution.html', title=title_html, task=temp, form=form,
                                    solution_log=solution_generation[title_html], message=verdict[0])
         else:
-            return render_template('solution.html', title=title_html, task=task, form=form,
-                                   solution_log=solution_generation[title_html],
+            c += 1
+            return render_template('solution.html', title=title_html, task=temp, form=form,
+                                   solution_log=['Дайте верный ответ, чтоб получить решение'],
                                    message=verdict[0])
-    return render_template('task_opened.html', title=title_html, task=task, form=form)
+    c += 1
+    return render_template('task_opened.html', title=title_html, task=temp, form=form)
 
 
 # нужно разделить обработчики для решения квадратного, линейного, примеров.

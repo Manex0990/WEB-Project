@@ -7,3 +7,4 @@ from wtforms.validators import DataRequired
 class TaskForm(FlaskForm):
     answer = StringField('Ответ')
     submit = SubmitField('Ответить')
+    exit = SubmitField('Выйти на главную страницу')
