@@ -268,7 +268,7 @@ class MyMath:
         if type_task == 's':
             if stage == 1:
                 a, b = self.search_coofs_for_stage_1_2(task)
-                return str(a + b)
+                return str(int(a + b))
             elif stage == 2:
                 a, b = self.search_coofs_for_stage_1_2(task)
                 return str(round(a + b, 2))
@@ -278,7 +278,7 @@ class MyMath:
         elif type_task == 'm':
             if stage == 1:
                 a, b = self.search_coofs_for_stage_1_2(task)
-                return str(a - b)
+                return str(int(a - b))
             elif stage == 2:
                 a, b = self.search_coofs_for_stage_1_2(task)
                 return str(round(a - b, 2))
@@ -298,7 +298,7 @@ class MyMath:
         elif type_task == 'mul':
             if stage == 1:
                 a, b = self.search_coofs_for_stage_1_2(task)
-                return str(round(a * b, 2))
+                return str(int(round(a * b, 2)))
             elif stage == 2:
                 a, b = self.search_coofs_for_stage_1_2(task)
                 return str(round(a * b, 2))
