@@ -7,16 +7,32 @@ app.config['SECRET_KEY'] = 'web_project'
 ex = MyMath()
 names = {'square': 'Квадратное уравнение',
          'line': 'Линейное уравнение',
-         'sum': 'Пример на сложение',
-         'min': 'Пример на вычитание',
-         'mul': 'Пример на умножение',
-         'crop': 'Пример на деление'}
+         'sum_1': 'Пример на сложение (простой)',
+         'sum_2': 'Пример на сложение (средний)',
+         'sum_3': 'Пример на сложение (сложный)',
+         'min_1': 'Пример на вычитание (простой)',
+         'min_2': 'Пример на вычитание (средний)',
+         'min_3': 'Пример на вычитание (сложный)',
+         'mul_1': 'Пример на умножение (простой)',
+         'mul_2': 'Пример на умножение (средний)',
+         'mul_3': 'Пример на умножение (сложный)',
+         'crop_1': 'Пример на деление (простой)',
+         'crop_2': 'Пример на деление (средний)',
+         'crop_3': 'Пример на деление (сложный)'}
 funcs = {'Квадратное уравнение': [ex.generate_square_x, ex.check_answer_square_x],
          'Линейное уравнение': [ex.generate_line_x, ex.check_answer_line_x],
-         'Пример на сложение': [ex.generate_sum_stage_1, ex.check_answer_for_all_stages],
-         'Пример на вычитание': [ex.generate_min_stage_1, ex.check_answer_for_all_stages],
-         'Пример на умножение': [ex.generate_multiply_stage_1, ex.check_answer_for_all_stages],
-         'Пример на деление': [ex.generate_crop_stage_1, ex.check_answer_for_all_stages]}
+         'Пример на сложение (простой)': [ex.generate_sum_stage_1, ex.check_answer_for_all_stages],
+         'Пример на сложение (средний)': [ex.generate_sum_stage_2, ex.check_answer_for_all_stages],
+         'Пример на сложение (сложный)': [ex.generate_sum_stage_3, ex.check_answer_for_all_stages],
+         'Пример на вычитание (простой)': [ex.generate_min_stage_1, ex.check_answer_for_all_stages],
+         'Пример на вычитание (средний)': [ex.generate_min_stage_2, ex.check_answer_for_all_stages],
+         'Пример на вычитание (сложный)': [ex.generate_min_stage_3, ex.check_answer_for_all_stages],
+         'Пример на умножение (простой)': [ex.generate_multiply_stage_1, ex.check_answer_for_all_stages],
+         'Пример на умножение (средний)': [ex.generate_multiply_stage_2, ex.check_answer_for_all_stages],
+         'Пример на умножение (сложный)': [ex.generate_multiply_stage_3, ex.check_answer_for_all_stages],
+         'Пример на деление (простой)': [ex.generate_crop_stage_1, ex.check_answer_for_all_stages],
+         'Пример на деление (средний)': [ex.generate_crop_stage_2, ex.check_answer_for_all_stages],
+         'Пример на деление (сложный)': [ex.generate_crop_stage_3, ex.check_answer_for_all_stages]}
 c_sq, c_line, c_ex = 0, 0, 0
 temp_sq, temp_line, temp_ex = '', '', ''
 
@@ -90,10 +106,11 @@ def open_task_examples_all_stages(title, level):
     global c_ex
     global temp_ex
     form = TaskForm()
+    full_name = '_'.join([title, level])
     if c_ex == 0:
-        task = funcs[names[title]][0]()
+        task = funcs[names[full_name]][0]()
         temp_ex = task
-    title_html = names[title]
+    title_html = names[full_name]
     solution_generation = {'Пример на сложение': ['Просто сложим все коэффициенты',
                                                   f'Ответ: {ex.answer_for_all_stages(temp_ex)}'],
                            'Пример на вычитание': ['Просто вычтем все коэффициенты',
@@ -104,11 +121,11 @@ def open_task_examples_all_stages(title, level):
                                                  f'Ответ: {ex.answer_for_all_stages(temp_ex)}']}
     if request.method == 'POST':
         user_answer = form.answer.data
-        verdict = funcs[names[title]][1](temp_ex, user_answer)
+        verdict = funcs[names[full_name]][1](temp_ex, user_answer)
         if verdict[1]:
             c_ex += 1
             return render_template('solution.html', title=title_html, task=temp_ex, form=form,
-                                   solution_log=solution_generation[title_html], message=verdict[0])
+                                   solution_log=solution_generation[title_html[:-10]], message=verdict[0])
         else:
             c_ex += 1
             return render_template('solution.html', title=title_html, task=temp_ex, form=form,
@@ -118,7 +135,7 @@ def open_task_examples_all_stages(title, level):
     return render_template('task_opened.html', title=title_html, task=temp_ex, form=form)
 
 
-# придумать как сократить копипасту в функции open_task_square и open_task_line (после строки if request.method == 'POST')
+# придумать как сократить копипасту в функции open_task_square и open_task_line (после строки if request.method == 'POST') !!!!!!!!
 # возможен баг с проверкой примеров из-за (не 5 а 5.0)
 def solution():
     pass
