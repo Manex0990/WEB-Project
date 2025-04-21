@@ -64,6 +64,15 @@ def open_task(title):
     return render_template('task_opened.html', title=title_html, task=temp, form=form)
 
 
+@app.route('/task')
+def open_task_menu():
+    global c
+    global temp
+    c = 0
+    temp = ''
+    return render_template('task_window.html')
+
+
 # нужно разделить обработчики для решения квадратного, линейного, примеров.
 # засунуть все в функцию open_task
 @app.route('/task/<title>/solution')

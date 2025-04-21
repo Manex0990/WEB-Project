@@ -19,16 +19,18 @@
             </p>
         {% endfor %}
     </p>
-    <center>
-    <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
-    </center>
         {{message}}
-        {{solution}}
+        {% if message != 'Верно. Продолжайте в том же духе.' %}
+        <form>
+        <center>
+        <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+        </center>
+        </form>
+        {% endif %}
     </form>
     <br />
     <br />
-    <br />
     {% block content %}{% endblock %}
-    <p>{{ form.exit(type='submit', class='btn btn-primary') }}</p>
+    <a class="btn btn-primary " href="/task">Назад</a>
     </body>
 </html>
