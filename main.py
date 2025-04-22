@@ -34,6 +34,9 @@ funcs = {'Квадратное уравнение': [ex.generate_square_x, ex.ch
          'Пример на деление (средний)': [ex.generate_crop_stage_2, ex.check_answer_for_all_stages],
          'Пример на деление (сложный)': [ex.generate_crop_stage_3, ex.check_answer_for_all_stages]}
 c_sq, c_line, c_ex = 0, 0, 0
+count_control = {'Квадратное уравнение': c_sq,
+                 'Линейное уравнение': c_line,
+                 'Пример': c_ex}
 temp_sq, temp_line, temp_ex = '', '', ''
 
 
@@ -59,15 +62,7 @@ def open_task_square():
     if request.method == 'POST':
         user_answer = form.answer.data
         verdict = funcs[names[title]][1](temp_sq, user_answer)
-        if verdict[1]:
-            c_sq += 1
-            return render_template('solution.html', title=title_html, task=temp_sq, form=form,
-                                   solution_log=solution_generation, message=verdict[0])
-        else:
-            c_sq += 1
-            return render_template('solution.html', title=title_html, task=temp_sq, form=form,
-                                   solution_log=['Дайте верный ответ, чтоб получить решение'],
-                                   message=verdict[0])
+        solution(title_html, temp_sq, form, solution_generation, verdict)
     c_sq += 1
     return render_template('task_opened.html', title=title_html, task=temp_sq, form=form)
 
@@ -88,15 +83,7 @@ def open_task_line():
     if request.method == 'POST':
         user_answer = form.answer.data
         verdict = funcs[names[title]][1](temp_line, user_answer)
-        if verdict[1]:
-            c_line += 1
-            return render_template('solution.html', title=title_html, task=temp_line, form=form,
-                                   solution_log=solution_generation, message=verdict[0])
-        else:
-            c_line += 1
-            return render_template('solution.html', title=title_html, task=temp_line, form=form,
-                                   solution_log=['Дайте верный ответ, чтоб получить решение'],
-                                   message=verdict[0])
+        solution(title_html, temp_line, form, solution_generation, verdict)
     c_line += 1
     return render_template('task_opened.html', title=title_html, task=temp_line, form=form)
 
@@ -122,23 +109,30 @@ def open_task_examples_all_stages(title, level):
     if request.method == 'POST':
         user_answer = form.answer.data
         verdict = funcs[names[full_name]][1](temp_ex, user_answer)
-        if verdict[1]:
-            c_ex += 1
-            return render_template('solution.html', title=title_html, task=temp_ex, form=form,
-                                   solution_log=solution_generation[title_html[:-10]], message=verdict[0])
-        else:
-            c_ex += 1
-            return render_template('solution.html', title=title_html, task=temp_ex, form=form,
-                                   solution_log=['Дайте верный ответ, чтоб получить решение'],
-                                   message=verdict[0])
+        solution(title_html, temp_ex, form, solution_generation[title_html[:-10]], verdict)
     c_ex += 1
     return render_template('task_opened.html', title=title_html, task=temp_ex, form=form)
 
 
 # придумать как сократить копипасту в функции open_task_square и open_task_line (после строки if request.method == 'POST') !!!!!!!!
 # возможен баг с проверкой примеров из-за (не 5 а 5.0)
-def solution():
-    pass
+def solution(title, task, form, solution_log, verdict):
+    if verdict[1]:
+        count_update(title)
+        return render_template('solution.html', title=title, task=task, form=form,
+                               solution_log=solution_log, message=verdict[0])
+    else:
+        count_update(title)
+        return render_template('solution.html', title=title, task=temp_ex, form=form,
+                               solution_log=['Дайте верный ответ, чтоб получить решение'],
+                               message=verdict[0])
+
+
+def count_update(title):
+    if 'пример' in title.lower():
+        count_control['Пример'] += 1
+    else:
+        count_control[title] += 1
 
 
 @app.route('/task')
