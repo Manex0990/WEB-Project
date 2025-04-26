@@ -1,7 +1,18 @@
 from random import randint, uniform
 
+from flask import make_response, render_template
+
 
 class MyMath:
+    def __init__(self):
+        pass
+
+    def cookies_control(self, title_html, task, form, solution_generation, verdict):
+        res = make_response(render_template('solution.html', title=title_html, task=task, form=form,
+                                            solution_log=solution_generation, message=verdict[0]))
+        res.set_cookie("visits_count", '1', max_age=60 * 60 * 24 * 365 * 2)
+        return res
+
     def generate_square_x(self):
         """
         Вернет кв уравнение в строковом формате.
@@ -311,7 +322,10 @@ class MyMath:
         Проверить ответ пользователя на любой пример.
         """
         type_task = '_'.join(self.iddentificate_task(task))
-        if str(user_answer) == str(self.answer_for_all_stages(task)):
+        ans = self.answer_for_all_stages(task)
+        if ans[-2:] == '.0':
+            ans = ans[:-2]
+        if str(user_answer) == str(ans):
             return ['Верно. Продолжайте в том же духе.', True, type_task]
         else:
             return ['Неверно. Проверьте рассчеты и попробуйте позже.', False]

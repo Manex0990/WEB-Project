@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, make_response
 from maths import MyMath
 from task import TaskForm
 
@@ -34,42 +34,42 @@ funcs = {'Квадратное уравнение': [ex.generate_square_x, ex.ch
          'Пример на деление (средний)': [ex.generate_crop_stage_2, ex.check_answer_for_all_stages],
          'Пример на деление (сложный)': [ex.generate_crop_stage_3, ex.check_answer_for_all_stages]}
 c_sq, c_line, c_ex = 0, 0, 0
-temp_sq, temp_line, temp_ex = '', '', ''
+temp_sq, temp_line, temp_ex = '', '', ''  # поменять на cookie
 
 
 @app.route('/task/square', methods=['GET', 'POST'])
 def open_task_square():
-    global c_sq
-    global temp_sq
-    title = 'square'
+    visits_count = int(request.cookies.get("visits_count", 0))
     form = TaskForm()
-    if c_sq == 0:
-        task = funcs[names[title]][0]()
-        temp_sq = task
-    title_html = names[title]
+    if visits_count == 0:
+        task = funcs[names['square']][0]()
+        with open('temp.txt', encoding='utf-8', mode='wt') as file:
+            file.write(task)
+    title_html = names['square']
     solution_generation = ['Сначала найдем дискриминант квадратного уравнения:',
                            'Если дискриманант больше нуля, то будет 2 корня',
                            'Если равен нулю, то будет 1 корень',
                            'Если меньше нуля, то Корней нет.',
-                           f'D = b\u00B2 - 4ac; D = {ex.find_discriminant(temp_sq)}',
+                           f'D = b\u00B2 - 4ac; D = {ex.find_discriminant(get_cur_task())}',
                            'Теперь можно найти корни(корень) уравнения',
                            'x1 = (-b - \u221AD) / 2a',
                            'x2 = (-b + \u221AD) / 2a',
-                           f'Ответ: {ex.answer_square_x(temp_sq)}']
+                           f'Ответ: {ex.answer_square_x(get_cur_task())}']
     if request.method == 'POST':
         user_answer = form.answer.data
-        verdict = funcs[names[title]][1](temp_sq, user_answer)
+        verdict = funcs[names['square']][1](get_cur_task(), user_answer)
         if verdict[1]:
-            c_sq += 1
-            return render_template('solution.html', title=title_html, task=temp_sq, form=form,
-                                   solution_log=solution_generation, message=verdict[0])
+            res = ex.cookies_control(title_html, get_cur_task(), form, solution_generation, verdict)
         else:
-            c_sq += 1
-            return render_template('solution.html', title=title_html, task=temp_sq, form=form,
-                                   solution_log=['Дайте верный ответ, чтоб получить решение'],
-                                   message=verdict[0])
-    c_sq += 1
-    return render_template('task_opened.html', title=title_html, task=temp_sq, form=form)
+            res = ex.cookies_control(title_html, get_cur_task(), form, ['Дайте верный ответ, чтоб получить решение'], verdict)
+        return res
+    return render_template('task_opened.html', title=title_html, task=get_cur_task(), form=form)
+
+
+def get_cur_task():
+    with open('temp.txt', encoding='utf-8', mode='rt') as file:
+        data = file.read()
+        return data
 
 
 @app.route('/task/line', methods=['GET', 'POST'])
@@ -147,6 +147,8 @@ def open_task_menu():
     global temp_sq, temp_line, temp_ex
     c_sq, c_line, c_ex = 0, 0, 0
     temp_sq, temp_line, temp_ex = '', '', ''
+    res = ex.cookies_control()
+    res.set_cookie("visits_count", '1', max_age=0)
     return render_template('task_window.html')
 
 
