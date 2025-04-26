@@ -7,12 +7,6 @@ class MyMath:
     def __init__(self):
         pass
 
-    def cookies_control(self, title_html, task, form, solution_generation, verdict):
-        res = make_response(render_template('solution.html', title=title_html, task=task, form=form,
-                                            solution_log=solution_generation, message=verdict[0]))
-        res.set_cookie("visits_count", '1', max_age=60 * 60 * 24 * 365 * 2)
-        return res
-
     def generate_square_x(self):
         """
         Вернет кв уравнение в строковом формате.
