@@ -138,5 +138,25 @@ def open_task_menu():
     return render_template('task_window.html')
 
 
+@app.route('/task/sum')
+def open_change_level_window_sum():
+    return render_template('change_level_window.html', name='sum')
+
+
+@app.route('/task/min')
+def open_change_level_window_min():
+    return render_template('change_level_window.html', name='min')
+
+
+@app.route('/task/mul')
+def open_change_level_window_mul():
+    return render_template('change_level_window.html', name='mul')
+
+
+@app.route('/task/crop')
+def open_change_level_window_crop():
+    return render_template('change_level_window.html', name='crop')
+
+
 if __name__ == '__main__':
     app.run(port=5000, host='127.0.0.1')
