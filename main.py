@@ -58,12 +58,12 @@ def open_task_square():
         verdict = funcs[names['square']][1](task, user_answer)
         if verdict[1]:
             res = make_response(
-                render_template('solution.html', title=title_html, task=task,
+                render_template('task_opened.html', title=title_html, task=task,
                                 form=form, solution_log=solution_generation, message=verdict[0]))
             res.set_cookie('cur_task_square', '', max_age=0)
         else:
             res = make_response(
-                render_template('solution.html', title=title_html, task=task,
+                render_template('task_opened.html', title=title_html, task=task,
                                 form=form, solution_log=['Дайте верный ответ, чтобы получить решение.'],
                                 message=verdict[0]))
         return res
@@ -86,12 +86,12 @@ def open_task_line():
         verdict = funcs[names['line']][1](task, user_answer)
         if verdict[1]:
             res = make_response(
-                render_template('solution.html', title=title_html, task=task,
+                render_template('task_opened.html', title=title_html, task=task,
                                 form=form, solution_log=solution_generation, message=verdict[0]))
             res.set_cookie('cur_task_line', '', max_age=0)
         else:
             res = make_response(
-                render_template('solution.html', title=title_html, task=task,
+                render_template('task_opened.html', title=title_html, task=task,
                                 form=form, solution_log=['Дайте верный ответ, чтобы получить решение.'],
                                 message=verdict[0]))
         return res
@@ -120,12 +120,12 @@ def open_task_examples_all_stages(title, level):
         verdict = funcs[names[full_name]][1](task, user_answer)
         if verdict[1]:
             res = make_response(
-                render_template('solution.html', title=title_html, task=task, form=form,
+                render_template('task_opened.html', title=title_html, task=task, form=form,
                                 solution_log=solution_generation[title_html[:-10]], message=verdict[0]))
             res.set_cookie('cur_task_ex', '', max_age=0)
         else:
             res = make_response(
-                render_template('solution.html', title=title_html, task=task,
+                render_template('task_opened.html', title=title_html, task=task,
                                 form=form, solution_log=['Дайте верный ответ, чтобы получить решение.'],
                                 message=verdict[0]))
         return res

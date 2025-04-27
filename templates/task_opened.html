@@ -30,7 +30,59 @@
     </form>
     <br />
     <br />
-    {% block content %}{% endblock %}
+    <body>
+{% if title == 'Квадратное уравнение' %}
+<form>
+    <h2>Решение квадратного уравнения</h2>
+    <h2>Наше уравнение: {{ task }}</h2>
+    <body>
+    {% for item in solution_log %}
+    <h2>{{ item }}</h2>
+    {% endfor %}
+    </body>
+</form>
+{% elif title == 'Линейное уравнение' %}
+<h2>Решение линейного уравнения</h2>
+    <h2>Наше уравнение: {{ task }}</h2>
+    <body>
+    {% for item in solution_log %}
+    <h2>{{ item }}</h2>
+    {% endfor %}
+    </body>
+{% elif 'Пример на сложение' in title %}
+<h2>Решение примера на сложение</h2>
+    <h2>Наш пример: {{ task }}</h2>
+    <body>
+    {% for item in solution_log %}
+    <h2>{{ item }}</h2>
+    {% endfor %}
+    </body>
+{% elif 'Пример на вычитание' in title %}
+<h2>Решение примера на вычитание</h2>
+    <h2>Наш пример: {{ task }}</h2>
+    <body>
+    {% for item in solution_log %}
+    <h2>{{ item }}</h2>
+    {% endfor %}
+    </body>
+{% elif 'Пример на умножение' in title %}
+<h2>Решение примера на умножение</h2>
+    <h2>Наш пример: {{ task }}</h2>
+    <body>
+    {% for item in solution_log %}
+    <h2>{{ item }}</h2>
+    {% endfor %}
+    </body>
+{% elif 'Пример на деление' in title %}
+<h2>Решение примера на деление</h2>
+    <h2>Наш пример: {{ task }}</h2>
+    <body>
+    {% for item in solution_log %}
+    <h2>{{ item }}</h2>
+    {% endfor %}
+    </body>
+</body>
+{% endif %}
     <a class="btn btn-primary " href="/task">Назад</a>
     </body>
 </html>
