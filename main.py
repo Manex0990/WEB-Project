@@ -135,7 +135,10 @@ def open_task_examples_all_stages(title, level):
 # возможен баг с проверкой примеров из-за (не 5 а 5.0)
 @app.route('/task')
 def open_task_menu():
-    return render_template('task_window.html')
+    res = make_response(render_template('task_window.html'))
+    res.set_cookie('cur_task_square', '', max_age=0)
+    res.set_cookie('cur_task_line', '', max_age=0)
+    return res
 
 
 @app.route('/task/sum')
