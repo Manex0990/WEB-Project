@@ -140,22 +140,30 @@ def open_task_menu():
 
 @app.route('/task/sum')
 def open_change_level_window_sum():
-    return render_template('change_level_window.html', name='sum')
+    res = make_response(render_template('change_level_window.html', name='sum'))
+    res.set_cookie('cur_task_ex', '', max_age=0)
+    return res
 
 
 @app.route('/task/min')
 def open_change_level_window_min():
-    return render_template('change_level_window.html', name='min')
+    res = make_response(render_template('change_level_window.html', name='min'))
+    res.set_cookie('cur_task_ex', '', max_age=0)
+    return res
 
 
 @app.route('/task/mul')
 def open_change_level_window_mul():
-    return render_template('change_level_window.html', name='mul')
+    res = make_response(render_template('change_level_window.html', name='mul'))
+    res.set_cookie('cur_task_ex', '', max_age=0)
+    return res
 
 
 @app.route('/task/crop')
 def open_change_level_window_crop():
-    return render_template('change_level_window.html', name='crop')
+    res = make_response(render_template('change_level_window.html', name='crop'))
+    res.set_cookie('cur_task_ex', '', max_age=0)
+    return res
 
 
 if __name__ == '__main__':
