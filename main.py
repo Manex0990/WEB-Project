@@ -1,7 +1,10 @@
-from flask import Flask, render_template, request, redirect, make_response
+from flask import Flask, render_template, request, make_response, abort
 from maths import MyMath
 from task import TaskForm
 from flask_login import current_user
+from data.users import User
+from data.groups import Group
+from data import db_session
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'web_project'
@@ -57,6 +60,7 @@ def open_task_square():
         user_answer = form.answer.data
         verdict = funcs[names['square']][1](task, user_answer)
         if verdict[1]:
+            update_points(verdict[2])
             res = make_response(
                 render_template('task_opened.html', title=title_html, task=task,
                                 form=form, solution_log=solution_generation, message=verdict[0]))
@@ -85,6 +89,7 @@ def open_task_line():
         user_answer = form.answer.data
         verdict = funcs[names['line']][1](task, user_answer)
         if verdict[1]:
+            update_points(verdict[2])
             res = make_response(
                 render_template('task_opened.html', title=title_html, task=task,
                                 form=form, solution_log=solution_generation, message=verdict[0]))
@@ -119,6 +124,7 @@ def open_task_examples_all_stages(title, level):
         user_answer = form.answer.data
         verdict = funcs[names[full_name]][1](task, user_answer)
         if verdict[1]:
+            update_points(verdict[2])
             res = make_response(
                 render_template('task_opened.html', title=title_html, task=task, form=form,
                                 solution_log=solution_generation[title_html[:-10]], message=verdict[0]))
@@ -167,6 +173,24 @@ def open_change_level_window_crop():
     res = make_response(render_template('change_level_window.html', name='crop'))
     res.set_cookie('cur_task_ex', '', max_age=0)
     return res
+
+
+def update_points(param):
+    points_data = {'square_x': 20, 'line_x': 15, 'sum_1': 5, 'sum_2': 8, 'sum_3': 10,
+                   'min_1': 5, 'min_2': 8, 'min_3': 10, 'mul_1': 7,
+                   'mul_2': 10, 'mul_3': 12, 'crop_1': 10, 'crop_2': 12, 'crop_3': 15}
+    db_session.global_init('db/web.db')
+    db_sess = db_session.create_session()
+    if current_user.is_authenticated:
+        groups = db_sess.query(User.groups).filter(User == current_user)
+        for group in groups:
+            db_session.global_init(group)
+            db_sess = db_session.create_session()
+            groups = db_sess.query(Group).filter(Group.id == current_user.id).first()
+            groups.points = int(groups.points) + points_data[param]
+            db_sess.commit()
+    else:
+        abort(404)
 
 
 if __name__ == '__main__':
