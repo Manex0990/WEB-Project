@@ -1,8 +1,9 @@
 from flask import Flask, render_template, redirect
 from data import db_session
+from data.groups import Group
 from data.users import User
-from form.user import RegisterForm, LoginForm
-from flask_login import LoginManager, login_user, logout_user
+from form.user import RegisterForm, LoginForm, GroupForm
+from flask_login import LoginManager, login_user, logout_user, current_user, login_required
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
@@ -63,6 +64,44 @@ def login():
     return render_template('login.html', title='Авторизация', form=form)
 
 
+@app.route('/')
+@login_required
+def index():
+    return render_template('index.html', current_user=current_user)
+
+
+@app.route('/group/create', methods=['GET', 'POST'])
+@login_required
+def group_create():
+    if not current_user.teacher:
+        print("У вас нет прав для создания групп")
+        return redirect("/")
+
+    form = GroupForm()
+    if form.validate_on_submit():
+        db_sess = db_session.create_session()
+        group = Group()
+        group.name = form.name.data
+        group.description = form.description.data
+        group.teacher_id = current_user.id
+        db_sess.add(group)
+        db_sess.commit()
+        print('Группа создана')
+        return redirect('/')
+    return render_template('group_create.html', title='Создание группы', form=form)
+
+
+@app.route('/groups')
+@login_required
+def view_groups():
+    if not current_user.teacher:
+        print("У вас нет прав для просмотра групп.")
+        return redirect("/")
+    db_sess = db_session.create_session()
+    groups = db_sess.query(Group).filter(Group.teacher_id == current_user.id).all()
+    return render_template('groups.html', title='Мои группы', groups=groups)
+
+
 @app.route('/logout')
 def logout():
     logout_user()
@@ -72,9 +111,11 @@ def logout():
 def main():
     app.run()
 
+
 @app.route('/')
 def index():
     return render_template('base.html')
+
 
 if __name__ == '__main__':
     main()

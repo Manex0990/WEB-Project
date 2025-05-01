@@ -19,3 +19,9 @@ class LoginForm(FlaskForm):
     password = PasswordField('Пароль', validators=[DataRequired()])
     remember_me = BooleanField('Запомнить меня')
     submit = SubmitField('Войти')
+
+
+class GroupForm(FlaskForm):
+    name = StringField('Название группы', validators=[DataRequired()])
+    description = StringField('Описание')
+    submit = SubmitField('Создать группу')
