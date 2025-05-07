@@ -4,13 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="415e6cc3-b282-42db-91da-bfea1a4db9ac" name="Changes" comment=" add login">
-      <change afterPath="$PROJECT_DIR$/data/groups.py" afterDir="false" />
+    <list default="true" id="415e6cc3-b282-42db-91da-bfea1a4db9ac" name="Changes" comment="fix">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/__all_models.py" beforeDir="false" afterPath="$PROJECT_DIR$/data/__all_models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/form/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/form/user.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/web.db" beforeDir="false" afterPath="$PROJECT_DIR$/db/web.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/task_opened.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/task_opened.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/task_window.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/task_window.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/~$ТЗ.docx" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,19 +51,25 @@
   &quot;associatedIndex&quot;: 7
 }</component>
   <component name="ProjectId" id="2w8HFXFOxfPZCm875CAo7chpsTw" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python.server.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;kirill&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.server.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
-}</component>
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\ВАДИМ\PycharmProjects\WEB-Project\form" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="server" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="WEB-Project" />
@@ -82,6 +91,21 @@
       <option name="MODULE_MODE" value="false" />
       <option name="REDIRECT_INPUT" value="false" />
       <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="ShConfigurationType">
+      <option name="SCRIPT_TEXT" value="" />
+      <option name="INDEPENDENT_SCRIPT_PATH" value="true" />
+      <option name="SCRIPT_PATH" value="" />
+      <option name="SCRIPT_OPTIONS" value="" />
+      <option name="INDEPENDENT_SCRIPT_WORKING_DIRECTORY" value="true" />
+      <option name="SCRIPT_WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="INDEPENDENT_INTERPRETER_PATH" value="false" />
+      <option name="INTERPRETER_PATH" value="$PROJECT_DIR$/../../../../WINDOWS/System32/WindowsPowerShell/v1.0/powershell.exe" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="EXECUTE_IN_TERMINAL" value="true" />
+      <option name="EXECUTE_SCRIPT_FILE" value="true" />
+      <envs />
       <method v="2" />
     </configuration>
     <recent_temporary>
@@ -133,6 +157,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value=" add login" />
-    <option name="LAST_COMMIT_MESSAGE" value=" add login" />
+    <MESSAGE value="fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix" />
   </component>
 </project>
