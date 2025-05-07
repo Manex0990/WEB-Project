@@ -23,5 +23,4 @@ class LoginForm(FlaskForm):
 
 class GroupForm(FlaskForm):
     name = StringField('Название группы', validators=[DataRequired()])
-    description = StringField('Описание')
     submit = SubmitField('Создать группу')

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{{ group.name }}</h1>
+
+{% if current_user.teacher %}
+<p>Пригласительная ссылка: <a href="{{ request.url_root + url_for('join_group', invite_link=group.invite_link) }}">{{
+    request.url_root + url_for('join_group', invite_link=group.invite_link) }}</a></p>
+{% endif %}
+
+<h2>Участники:</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Имя</th>
+        <th>Баллы</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for member in members %}
+    <tr>
+        <td>{{ member.user.name }} {{ member.user.surname }}</td>
+        <td>{{ member.points }}</td>
+
+        {% endif %}
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
