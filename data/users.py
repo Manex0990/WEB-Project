@@ -8,8 +8,7 @@ from sqlalchemy.orm import relationship
 class User(SqlAlchemyBase, UserMixin):
     __tablename__ = 'users'
 
-    id = sqlalchemy.Column(sqlalchemy.Integer,
-                           primary_key=True, autoincrement=True)
+    id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, autoincrement=True)
     surname = sqlalchemy.Column(sqlalchemy.String)
     name = sqlalchemy.Column(sqlalchemy.String)
     patronymic = sqlalchemy.Column(sqlalchemy.String)
@@ -17,7 +16,7 @@ class User(SqlAlchemyBase, UserMixin):
     hashed_password = sqlalchemy.Column(sqlalchemy.String)
     teacher = sqlalchemy.Column(sqlalchemy.Boolean)
 
-    groups = relationship("Group", back_populates="user")
+    group_members = relationship("GroupMember", back_populates="user")
 
     def __repr__(self):
         return f'<User> {self.id} {self.surname} {self.name}'
