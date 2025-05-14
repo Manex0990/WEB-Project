@@ -3,3 +3,4 @@ Flask-Login
 Werkzeug
 WTForms
 Flask
+flask-wtf
