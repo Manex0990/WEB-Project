@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="415e6cc3-b282-42db-91da-bfea1a4db9ac" name="Changes" comment="all working project">
-      <change beforePath="$PROJECT_DIR$/maths.py" beforeDir="false" afterPath="$PROJECT_DIR$/maths.py" afterDir="false" />
+    <list default="true" id="415e6cc3-b282-42db-91da-bfea1a4db9ac" name="Changes" comment="last fixes">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/web.db" beforeDir="false" afterPath="$PROJECT_DIR$/db/web.db" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -181,7 +183,15 @@
       <option name="project" value="LOCAL" />
       <updated>1747222842369</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="last fixes">
+      <option name="closed" value="true" />
+      <created>1747223282927</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1747223282927</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -201,6 +211,7 @@
     <MESSAGE value="fix" />
     <MESSAGE value="work" />
     <MESSAGE value="all working project" />
-    <option name="LAST_COMMIT_MESSAGE" value="all working project" />
+    <MESSAGE value="last fixes" />
+    <option name="LAST_COMMIT_MESSAGE" value="last fixes" />
   </component>
 </project>
