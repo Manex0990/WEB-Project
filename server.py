@@ -48,8 +48,21 @@ funcs = {'Квадратное уравнение': [ex.generate_square_x, ex.ch
          'Пример на деление (сложный)': [ex.generate_crop_stage_3, ex.check_answer_for_all_stages]}
 
 
-@app.route('/task/square', methods=['GET', 'POST'])
-def open_task_square():
+def update_points(group_id, user_id, points):
+    db_sess = db_session.create_session()
+    member = db_sess.query(GroupMember).filter_by(group_id=group_id, user_id=user_id).first()
+    if member:
+        member.points += points
+        db_sess.commit()
+    db_sess.close()
+
+
+@app.route('/student_group/<int:group_id>/task/square', methods=['GET', 'POST'])
+def open_task_square(group_id):
+    group_member = GroupMember.get_member(current_user.id, group_id)
+    if not group_member:
+        flash("Вы не состоите в этой группе!", "error")
+        return redirect('/')
     task = str(request.cookies.get('cur_task_square', funcs[names['square']][0]()))
     form = TaskForm()
     title_html = names['square']
@@ -69,7 +82,7 @@ def open_task_square():
         user_answer = form.answer.data
         verdict = funcs[names['square']][1](task, user_answer)
         if verdict[1]:
-            #update_points(verdict[2])
+            update_points(group_id, current_user.id, 20)
             res = make_response(
                 render_template('task_opened.html', title=title_html, task=task,
                                 form=form, solution_log=solution_generation, message=verdict[0]))
@@ -83,8 +96,12 @@ def open_task_square():
     return page
 
 
-@app.route('/task/line', methods=['GET', 'POST'])
-def open_task_line():
+@app.route('/student_group/<int:group_id>/task/line', methods=['GET', 'POST'])
+def open_task_line(group_id):
+    group_member = GroupMember.get_member(current_user.id, group_id)
+    if not group_member:
+        flash("Вы не состоите в этой группе!", "error")
+        return redirect('/')
     task = str(request.cookies.get('cur_task_line', funcs[names['line']][0]()))
     form = TaskForm()
     title_html = names['line']
@@ -98,7 +115,7 @@ def open_task_line():
         user_answer = form.answer.data
         verdict = funcs[names['line']][1](task, user_answer)
         if verdict[1]:
-            #update_points(verdict[2])
+            update_points(group_id, current_user.id, 15)
             res = make_response(
                 render_template('task_opened.html', title=title_html, task=task,
                                 form=form, solution_log=solution_generation, message=verdict[0]))
@@ -112,8 +129,14 @@ def open_task_line():
     return page
 
 
-@app.route('/task/<title>/<level>', methods=['GET', 'POST'])
-def open_task_examples_all_stages(title, level):
+@app.route('/student_group/<int:group_id>/task/<title>/<level>', methods=['GET', 'POST'])
+def open_task_examples_all_stages(group_id, title, level):
+    points_data = {'sum_1': 5, 'sum_2': 8, 'sum_3': 10, 'mul_2': 10,
+                   'mul_3': 12, 'crop_1': 10, 'crop_2': 12, 'crop_3': 15}
+    group_member = GroupMember.get_member(current_user.id, group_id)
+    if not group_member:
+        flash("Вы не состоите в этой группе!", "error")
+        return redirect('/')
     full_name = '_'.join([title, level])
     task = str(request.cookies.get('cur_task_ex', funcs[names[full_name]][0]()))
     form = TaskForm()
@@ -133,7 +156,7 @@ def open_task_examples_all_stages(title, level):
         user_answer = form.answer.data
         verdict = funcs[names[full_name]][1](task, user_answer)
         if verdict[1]:
-            #update_points(verdict[2])
+            update_points(group_id, current_user.id, points_data[full_name])
             res = make_response(
                 render_template('task_opened.html', title=title_html, task=task, form=form,
                                 solution_log=solution_generation[title_html[:-10]], message=verdict[0]))
@@ -148,16 +171,24 @@ def open_task_examples_all_stages(title, level):
 
 
 # возможен баг с проверкой примеров из-за (не 5 а 5.0)
-@app.route('/task')
-def open_task_menu():
+@app.route('/student_group/<int:group_id>/task', methods=['GET', 'POST'])
+def open_task_menu(group_id):
+    group_member = GroupMember.get_member(current_user.id, group_id)
+    if not group_member:
+        flash("Вы не состоите в этой группе!", "error")
+        return redirect('/')
     res = make_response(render_template('task_window.html'))
     res.set_cookie('cur_task_square', '', max_age=0)
     res.set_cookie('cur_task_line', '', max_age=0)
     return res
 
 
-@app.route('/task/<name>')
-def open_change_level_window(name):
+@app.route('/student_group/<int:group_id>/task/<name>', methods=['GET', 'POST'])
+def open_change_level_window(group_id, name):
+    group_member = GroupMember.get_member(current_user.id, group_id)
+    if not group_member:
+        flash("Вы не состоите в этой группе!", "error")
+        return redirect('/')
     res = make_response(render_template('change_level_window.html', name=name))
     res.set_cookie('cur_task_ex', '', max_age=0)
     return res
@@ -167,7 +198,6 @@ def open_change_level_window(name):
 def load_user(user_id):
     db_sess = db_session.create_session()
     user = db_sess.get(User, user_id)
-    db_sess.close()
     return user
 
 
@@ -186,14 +216,17 @@ def register():
 
         db_sess = db_session.create_session()
         if db_sess.query(User).filter(User.email == form.email.data).first():
-            db_sess.close()
             return render_template('register.html', form=form, message="Такой пользователь уже есть")
 
-        user = User()
+        user = User(surname=form.surname.data,
+                    name=form.name.data,
+                    patronymic=form.patronymic.data,
+                    email=form.email.data,
+                    hashed_password=form.password.data,
+                    teacher=form.teacher.data)
         user.set_password(form.password.data)
         db_sess.add(user)
         db_sess.commit()
-        db_sess.close()
         return redirect('/login')
 
     return render_template('register.html', form=form)
@@ -205,7 +238,6 @@ def login():
     if form.validate_on_submit():
         db_sess = db_session.create_session()
         user = db_sess.query(User).filter(User.email == form.email.data).first()
-        db_sess.close()
         if user and user.check_password(form.password.data):
             login_user(user, remember=form.remember_me.data)
             return redirect('/')
@@ -235,7 +267,6 @@ def group_create():
         teacher_entry = GroupMember(group_id=group.id, user_id=current_user.id, is_teacher=True)
         db_sess.add(teacher_entry)
         db_sess.commit()
-        db_sess.close()
         return redirect(url_for('view_group', group_id=group.id))
     return render_template('group_create.html', form=form)
 
@@ -246,20 +277,17 @@ def join_group(invite_link):
     db_sess = db_session.create_session()
     group = db_sess.query(Group).filter(Group.invite_link == invite_link).first()
     if not group:
-        db_sess.close()
         return render_template('base.html', title='Такой группы нет')
 
     exists = db_sess.query(GroupMember).filter(GroupMember.group_id == group.id,
                                                GroupMember.user_id == current_user.id).first()
 
     if exists:
-        db_sess.close()
         return redirect(url_for('view_student_group', group_id=group.id))
 
     new_member = GroupMember(group_id=group.id, user_id=current_user.id, is_teacher=False)
     db_sess.add(new_member)
     db_sess.commit()
-    db_sess.close()
     return redirect(url_for('view_student_group', group_id=group.id))
 
 
@@ -273,7 +301,6 @@ def view_group(group_id):
 
     group = db_sess.query(Group).filter(Group.id == group_id).first()
     if not group:
-        db_sess.close()
         return render_template('base.html', title='Группа не найдена')
 
     teacher = db_sess.query(GroupMember).filter_by(
@@ -283,11 +310,9 @@ def view_group(group_id):
     ).first()
 
     if not teacher:
-        db_sess.close()
         return render_template('base.html', title='Нет доступа')
 
     members = db_sess.query(GroupMember).options(joinedload(GroupMember.user)).filter_by(group_id=group_id).all()
-    db_sess.close()
 
     return render_template('group_details.html', group=group, members=members)
 
@@ -316,7 +341,6 @@ def add_points(group_id, user_id):
     if member:
         member.points += points
         db_sess.commit()
-    db_sess.close()
     return redirect(url_for('view_group', group_id=group_id))
 
 
