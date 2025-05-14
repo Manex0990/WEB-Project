@@ -57,16 +57,20 @@ def update_points(group_id, user_id, points):
     db_sess.close()
 
 
-@app.route('/student_group/<int:group_id>/task/square', methods=['GET', 'POST'])
+@app.route('/student_groups/<int:group_id>/task/square', methods=['GET', 'POST'])
 def open_task_square(group_id):
-    group_member = GroupMember.get_member(current_user.id, group_id)
+    db_sess = db_session.create_session()
+    group = db_sess.query(Group).filter(Group.id == group_id).first()
+    group_member = db_sess.query(GroupMember).filter(GroupMember.id == current_user.id,
+                                                     GroupMember.group_id == group_id).first()
+    db_sess.close()
     if not group_member:
         flash("Вы не состоите в этой группе!", "error")
         return redirect('/')
     task = str(request.cookies.get('cur_task_square', funcs[names['square']][0]()))
     form = TaskForm()
     title_html = names['square']
-    page = make_response(render_template('task_opened.html', title=title_html,
+    page = make_response(render_template('task_opened.html', title=title_html, group=group,
                                          task=task, form=form))
     page.set_cookie('cur_task_square', value=str(task), max_age=60 * 60 * 24 * 365 * 2)
     solution_generation = ['Сначала найдем дискриминант квадратного уравнения:',
@@ -84,28 +88,32 @@ def open_task_square(group_id):
         if verdict[1]:
             update_points(group_id, current_user.id, 20)
             res = make_response(
-                render_template('task_opened.html', title=title_html, task=task,
+                render_template('task_opened.html', title=title_html, task=task, group=group,
                                 form=form, solution_log=solution_generation, message=verdict[0]))
             res.set_cookie('cur_task_square', '', max_age=0)
         else:
             res = make_response(
-                render_template('task_opened.html', title=title_html, task=task,
+                render_template('task_opened.html', title=title_html, task=task, group=group,
                                 form=form, solution_log=['Дайте верный ответ, чтобы получить решение.'],
                                 message=verdict[0]))
         return res
     return page
 
 
-@app.route('/student_group/<int:group_id>/task/line', methods=['GET', 'POST'])
+@app.route('/student_groups/<int:group_id>/task/line', methods=['GET', 'POST'])
 def open_task_line(group_id):
-    group_member = GroupMember.get_member(current_user.id, group_id)
+    db_sess = db_session.create_session()
+    group = db_sess.query(Group).filter(Group.id == group_id).first()
+    group_member = db_sess.query(GroupMember).filter(GroupMember.id == current_user.id,
+                                                     GroupMember.group_id == group_id).first()
+    db_sess.close()
     if not group_member:
         flash("Вы не состоите в этой группе!", "error")
         return redirect('/')
     task = str(request.cookies.get('cur_task_line', funcs[names['line']][0]()))
     form = TaskForm()
     title_html = names['line']
-    page = make_response(render_template('task_opened.html', title=title_html,
+    page = make_response(render_template('task_opened.html', title=title_html, group=group,
                                          task=task, form=form))
     page.set_cookie('cur_task_line', value=str(task), max_age=60 * 60 * 24 * 365 * 2)
     solution_generation = ['Для того, чтобы решить линейное уравнение нужно все коэффициенты с "х"',
@@ -117,23 +125,28 @@ def open_task_line(group_id):
         if verdict[1]:
             update_points(group_id, current_user.id, 15)
             res = make_response(
-                render_template('task_opened.html', title=title_html, task=task,
+                render_template('task_opened.html', title=title_html, task=task, group=group,
                                 form=form, solution_log=solution_generation, message=verdict[0]))
             res.set_cookie('cur_task_line', '', max_age=0)
         else:
             res = make_response(
-                render_template('task_opened.html', title=title_html, task=task,
+                render_template('task_opened.html', title=title_html, task=task, group=group,
                                 form=form, solution_log=['Дайте верный ответ, чтобы получить решение.'],
                                 message=verdict[0]))
         return res
     return page
 
 
-@app.route('/student_group/<int:group_id>/task/<title>/<level>', methods=['GET', 'POST'])
+@app.route('/student_groups/<int:group_id>/task/<title>/<level>', methods=['GET', 'POST'])
 def open_task_examples_all_stages(group_id, title, level):
-    points_data = {'sum_1': 5, 'sum_2': 8, 'sum_3': 10, 'mul_2': 10,
+    points_data = {'sum_1': 5, 'sum_2': 8, 'sum_3': 10, 'min_1': 5, 'min_2': 8,
+                   'min_3': 10, 'mul_1': 7,'mul_2': 10,
                    'mul_3': 12, 'crop_1': 10, 'crop_2': 12, 'crop_3': 15}
-    group_member = GroupMember.get_member(current_user.id, group_id)
+    db_sess = db_session.create_session()
+    group = db_sess.query(Group).filter(Group.id == group_id).first()
+    group_member = db_sess.query(GroupMember).filter(GroupMember.id == current_user.id,
+                                                     GroupMember.group_id == group_id).first()
+    db_sess.close()
     if not group_member:
         flash("Вы не состоите в этой группе!", "error")
         return redirect('/')
@@ -141,7 +154,7 @@ def open_task_examples_all_stages(group_id, title, level):
     task = str(request.cookies.get('cur_task_ex', funcs[names[full_name]][0]()))
     form = TaskForm()
     title_html = names[full_name]
-    page = make_response(render_template('task_opened.html', title=title_html,
+    page = make_response(render_template('task_opened.html', title=title_html, group=group,
                                          task=task, form=form))
     page.set_cookie('cur_task_ex', value=str(task), max_age=60 * 60 * 24 * 365 * 2)
     solution_generation = {'Пример на сложение': ['Просто сложим все коэффициенты',
@@ -158,12 +171,12 @@ def open_task_examples_all_stages(group_id, title, level):
         if verdict[1]:
             update_points(group_id, current_user.id, points_data[full_name])
             res = make_response(
-                render_template('task_opened.html', title=title_html, task=task, form=form,
+                render_template('task_opened.html', title=title_html, task=task, form=form, group=group,
                                 solution_log=solution_generation[title_html[:-10]], message=verdict[0]))
             res.set_cookie('cur_task_ex', '', max_age=0)
         else:
             res = make_response(
-                render_template('task_opened.html', title=title_html, task=task,
+                render_template('task_opened.html', title=title_html, task=task, group=group,
                                 form=form, solution_log=['Дайте верный ответ, чтобы получить решение.'],
                                 message=verdict[0]))
         return res
@@ -171,25 +184,33 @@ def open_task_examples_all_stages(group_id, title, level):
 
 
 # возможен баг с проверкой примеров из-за (не 5 а 5.0)
-@app.route('/student_group/<int:group_id>/task', methods=['GET', 'POST'])
+@app.route('/student_groups/<int:group_id>/task', methods=['GET', 'POST'])
 def open_task_menu(group_id):
-    group_member = GroupMember.get_member(current_user.id, group_id)
+    db_sess = db_session.create_session()
+    group = db_sess.query(Group).filter(Group.id == group_id).first()
+    group_member = db_sess.query(GroupMember).filter(GroupMember.id == current_user.id,
+                                                     GroupMember.group_id == group_id).first()
+    db_sess.close()
     if not group_member:
         flash("Вы не состоите в этой группе!", "error")
         return redirect('/')
-    res = make_response(render_template('task_window.html'))
+    res = make_response(render_template('task_window.html', group=group))
     res.set_cookie('cur_task_square', '', max_age=0)
     res.set_cookie('cur_task_line', '', max_age=0)
     return res
 
 
-@app.route('/student_group/<int:group_id>/task/<name>', methods=['GET', 'POST'])
+@app.route('/student_groups/<int:group_id>/task/<name>', methods=['GET', 'POST'])
 def open_change_level_window(group_id, name):
-    group_member = GroupMember.get_member(current_user.id, group_id)
+    db_sess = db_session.create_session()
+    group = db_sess.query(Group).filter(Group.id == group_id).first()
+    group_member = db_sess.query(GroupMember).filter(GroupMember.id == current_user.id,
+                                                     GroupMember.group_id == group_id).first()
+    db_sess.close()
     if not group_member:
         flash("Вы не состоите в этой группе!", "error")
         return redirect('/')
-    res = make_response(render_template('change_level_window.html', name=name))
+    res = make_response(render_template('change_level_window.html', group=group, name=name))
     res.set_cookie('cur_task_ex', '', max_age=0)
     return res
 
@@ -356,7 +377,7 @@ def regenerate_invite_link(group_id):
     return redirect(url_for('view_group', group_id=group.id))
 
 
-@app.route('/student_group/<int:group_id>')
+@app.route('/student_groups/<int:group_id>')
 @login_required
 def view_student_group(group_id):
     db_sess = db_session.create_session()
@@ -372,7 +393,7 @@ def view_student_group(group_id):
 @login_required
 def view_groups():
     if not current_user.teacher:
-        return render_template('base.html', title='Нет доступа')
+        return render_template('student_groups.html', line='Вы не учитель, у вас нет ваших групп. Перейдите в раздел Мои группы.')
 
     db_sess = db_session.create_session()
 
