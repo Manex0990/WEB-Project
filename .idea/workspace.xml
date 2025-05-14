@@ -4,13 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="415e6cc3-b282-42db-91da-bfea1a4db9ac" name="Changes" comment="fix">
+    <list default="true" id="415e6cc3-b282-42db-91da-bfea1a4db9ac" name="Changes" comment="realize 2">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/web.db" beforeDir="false" afterPath="$PROJECT_DIR$/db/web.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/server.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task.py" beforeDir="false" afterPath="$PROJECT_DIR$/form/task.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/~$ТЗ.docx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/maths.py" beforeDir="false" afterPath="$PROJECT_DIR$/maths.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -138,7 +134,23 @@
       <option name="project" value="LOCAL" />
       <updated>1745601437323</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="realize 2">
+      <option name="closed" value="true" />
+      <created>1747212243984</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1747212243984</updated>
+    </task>
+    <task id="LOCAL-00003" summary="realize 2">
+      <option name="closed" value="true" />
+      <created>1747212357584</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1747212357584</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -155,6 +167,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value=" add login" />
     <MESSAGE value="fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix" />
+    <MESSAGE value="realize 2" />
+    <option name="LAST_COMMIT_MESSAGE" value="realize 2" />
   </component>
 </project>
