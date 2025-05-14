@@ -202,7 +202,7 @@ def view_student_group(group_id):
 @login_required
 def view_groups():
     if not current_user.teacher:
-        return render_template('base.html', title='Нет доступа')
+        return render_template('student_groups.html')
 
     db_sess = db_session.create_session()
 
