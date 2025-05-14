@@ -319,6 +319,8 @@ class MyMath:
         ans = self.answer_for_all_stages(task)
         if ans[-2:] == '.0':
             ans = ans[:-2]
+        if user_answer[-2:] == '.0':
+            user_answer = user_answer[:-2]
         if str(user_answer) == str(ans):
             return ['Верно. Продолжайте в том же духе.', True, type_task]
         else:

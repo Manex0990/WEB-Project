@@ -11,7 +11,7 @@
     <p class="alert alert-danger" role="alert">
         {{ error }}
     </p>
-        {% endfor %}
+    {% endfor %}
     </p>
     <p>
         {{ form.password.label }}<br>
@@ -20,7 +20,7 @@
     <p class="alert alert-danger" role="alert">
         {{ error }}
     </p>
-        {% endfor %}
+    {% endfor %}
     </p>
     <p>
         {{ form.password_again.label }}<br>
@@ -29,7 +29,7 @@
     <p class="alert alert-danger" role="alert">
         {{ error }}
     </p>
-        {% endfor %}
+    {% endfor %}
     </p>
     <p>
         {{ form.name.label }}<br>
@@ -38,7 +38,7 @@
     <p class="alert alert-danger" role="alert">
         {{ error }}
     </p>
-        {% endfor %}
+    {% endfor %}
     </p>
     <p>
         {{ form.surname.label }}<br>
@@ -47,7 +47,7 @@
     <p class="alert alert-danger" role="alert">
         {{ error }}
     </p>
-        {% endfor %}
+    {% endfor %}
     </p>
     <p>
         {{ form.patronymic.label }}<br>
@@ -56,10 +56,10 @@
     <p class="alert alert-danger" role="alert">
         {{ error }}
     </p>
-        {% endfor %}
+    {% endfor %}
     </p>
     <p>{{ form.teacher(type="checkbox", class="btn btn-primary") }}
-    {{ form.teacher.label }}</p>
+        {{ form.teacher.label }}</p>
 
     <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
     {{message}}

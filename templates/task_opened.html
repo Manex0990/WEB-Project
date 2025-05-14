@@ -1,6 +1,9 @@
-{% extends "base.html" %}
-
-{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+        <title>{{ title }}</title>
+</head>
     <body>
     <h1>Задание {{ title }}</h1>
     <h2>Решите уравнение {{ task }}. Если 2 решения, то запишите их через пробел в порядке возрастания.</h2>
@@ -78,6 +81,6 @@
     </body>
 </body>
 {% endif %}
-    <a class="btn btn-primary " href="/task">Назад</a>
+    <a class="btn btn-primary " href="/student_groups/{{ group.id }}/task">Назад</a>
     </body>
-{% endblock %}
+</html>
