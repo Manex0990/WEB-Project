@@ -15,6 +15,7 @@ class User(SqlAlchemyBase, UserMixin):
     email = sqlalchemy.Column(sqlalchemy.String, unique=True)
     hashed_password = sqlalchemy.Column(sqlalchemy.String)
     teacher = sqlalchemy.Column(sqlalchemy.Boolean)
+    avatar = sqlalchemy.Column(sqlalchemy.String)
 
     group_members = relationship("GroupMember", back_populates="user")
 

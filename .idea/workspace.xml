@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="415e6cc3-b282-42db-91da-bfea1a4db9ac" name="Changes" comment="add gitignore and start.sh">
-      <change afterPath="$PROJECT_DIR$/data/math_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/web.db" beforeDir="false" afterPath="$PROJECT_DIR$/db/web.db" afterDir="false" />
-    </list>
+    <list default="true" id="415e6cc3-b282-42db-91da-bfea1a4db9ac" name="Changes" comment="add gitignore and start.sh" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -44,19 +41,20 @@
   &quot;associatedIndex&quot;: 7
 }</component>
   <component name="ProjectId" id="2w8HFXFOxfPZCm875CAo7chpsTw" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.server.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.server.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\ВАДИМ\PycharmProjects\PythonProject\WEB-Project\form" />
@@ -208,10 +206,10 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value=" add login" />
     <MESSAGE value="realize 2" />
-    <MESSAGE value="fix" />
     <MESSAGE value="work" />
     <MESSAGE value="all working project" />
     <MESSAGE value="last fixes" />
-    <option name="LAST_COMMIT_MESSAGE" value="last fixes" />
+    <MESSAGE value="fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix" />
   </component>
 </project>
